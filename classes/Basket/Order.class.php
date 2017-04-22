@@ -1,6 +1,5 @@
 <?php
-namespace Shop\classes\Order;
-use Shop\classes\Basket;
+namespace Shop\classes\Basket;
 
 class Order extends Basket
 {

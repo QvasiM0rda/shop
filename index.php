@@ -2,30 +2,32 @@
   namespace Shop;
   error_reporting(E_ALL);
   include 'functions/function.php';
-  use Shop\classes\Keyboard\Keyboard;
-  use Shop\classes\Printers\Printers;
-  use Shop\classes\Sugar\Sugar;
-  use Shop\classes\Exception\ShopException;
-  
+  use Shop\classes\Product\Keyboard;
+  use Shop\classes\Product\Printers;
+  use Shop\classes\Product\Sugar;
+
   $keyboard = new Keyboard('keyboard', 500, 'USB', 'мембрана');
   $printer = new Printers('printer', 35000, 'A3/A4', '10');
   $sugar = new Sugar('sugar', 500, '10');
 
-  function throwException()
-  {
-    throw new ShopException('Сработало исключение');
-  }
-
-  try {
-    if (empty($keyboard->getPrice())) {
-      throwException();
+  function checkPrice($price) {
+    if ($price === '') {
+     throw new \Exception('Не задана цена на товар!');
     }
-  } catch(ShopException $e) {
-    echo 'Цена на клавиатуру не задана';
-    die;
+    return $price;
   }
 
   if(!empty($_POST)) {
+    try {
+      echo checkPrice($keyboard->getPrice());
+      echo checkPrice($printer->getPrice());
+      echo checkPrice($sugar->getPrice());
+    }
+    catch (\Exception $e) {
+      echo 'Выброшено исключение: ' . $e->getMessage() . "\n";
+      die;
+    }
+    
     $_SESSION['keyboard'] = [$_POST['keyboard'], $keyboard->toBasket()];
     $_SESSION['printer'] = [$_POST['printer'],  $printer->toBasket()];
     $_SESSION['sugar'] = [$_POST['sugar'], $sugar->toBasket()];
@@ -44,6 +46,7 @@
   <form method="post">
     <fieldset>
       <legend>Доступные товары</legend>
+      <p>Для добавления товара в корзину выберите нужно количество товаров и нажмите кнопку "Добавить в корзину".</p>
       <?php
         echo $keyboard->enableProduct();
         echo $printer->enableProduct();

@@ -1,6 +1,5 @@
 <?php
-namespace Shop\classes\Keyboard;
-use Shop\classes\Product;
+namespace Shop\classes\Product;
 
 class Keyboard extends Product
 {

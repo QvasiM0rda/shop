@@ -1,6 +1,5 @@
 <?php
-namespace Shop\classes\Sugar;
-use Shop\classes\Product;
+namespace Shop\classes\Product;
 
 class Sugar extends Product
 {

@@ -1,6 +1,5 @@
 <?php
-namespace Shop\classes\Printers;
-use Shop\classes\Product;
+namespace Shop\classes\Product;
 
 class Printers extends Product
 {

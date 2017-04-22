@@ -1,5 +1,5 @@
 <?php
-namespace Shop\classes;
+namespace Shop\classes\Basket;
 
 abstract class Basket
 {

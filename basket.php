@@ -2,7 +2,7 @@
 namespace Shop;
 error_reporting(E_ALL);
 include 'functions/function.php';
-use Shop\classes\Order\Order;
+use Shop\classes\Basket\Order;
 
 $order = new Order();
 $order->toBasket($_SESSION);
@@ -21,6 +21,15 @@ if(isset($_POST['back'])){
   die;
 }
 
+if (isset($_POST['process'])) {
+  echo 'Ваш заказ: ';
+  foreach ($order->basket() as $product){
+    echo $product;
+  }
+  echo $order->getTotalPrice() . '<br>';
+  die;
+}
+
 ?>
 
 <!doctype html>
@@ -33,6 +42,9 @@ if(isset($_POST['back'])){
   <form method="post">
     <fieldset>
       <legend>Корзина</legend>
+      <p>Для удаления товара из корзины пометтье галочкой нужный товар и нажмите кнопку "Удалить выбранные".</p>
+      <p>Вернуться к выбору товаров можно, нажав кнопку "Вернуться к товарам".</p>
+      <p>Для оформления заказа нажмите кнопку "Оформить заказ".</p>
       <?php
         foreach ($order->basket() as $product){
           echo $product;

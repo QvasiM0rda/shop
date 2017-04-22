@@ -1,5 +1,5 @@
 <?php
-namespace Shop\classes;
+namespace Shop\classes\Product;
 
 abstract class Product
 {
