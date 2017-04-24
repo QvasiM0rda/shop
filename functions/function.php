@@ -2,6 +2,7 @@
 namespace Shop\functions;
 session_start();
 
+//Автозагрузка классов
 function autoloadClass($className)
 {
   $className = __DIR__ . str_replace('\\', DIRECTORY_SEPARATOR, $className);

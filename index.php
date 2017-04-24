@@ -6,10 +6,12 @@
   use Shop\classes\Product\Printers;
   use Shop\classes\Product\Sugar;
 
+  //Создание товаров
   $keyboard = new Keyboard('keyboard', 500, 'USB', 'мембрана');
   $printer = new Printers('printer', 35000, 'A3/A4', '10');
   $sugar = new Sugar('sugar', 500, '10');
 
+  //Функция для проверки, установлена цена на товар или нет
   function checkPrice($price) {
     if ($price === '') {
      throw new \Exception('Не задана цена на товар!');
@@ -17,6 +19,7 @@
     return $price;
   }
 
+  //Проверка цены
   if(!empty($_POST)) {
     try {
       echo checkPrice($keyboard->getPrice());
@@ -27,10 +30,13 @@
       echo 'Выброшено исключение: ' . $e->getMessage() . "\n";
       die;
     }
-    
+
+    //В сессию добавляется количество товара и результат метода - название и цена
     $_SESSION['keyboard'] = [$_POST['keyboard'], $keyboard->toBasket()];
     $_SESSION['printer'] = [$_POST['printer'],  $printer->toBasket()];
     $_SESSION['sugar'] = [$_POST['sugar'], $sugar->toBasket()];
+
+    //Переход на страницу корзины
     header('Location: basket.php');
     die;
   }
