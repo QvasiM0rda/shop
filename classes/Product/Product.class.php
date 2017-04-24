@@ -20,8 +20,12 @@ abstract class Product
   //Метод устанавливет название и цену товара
   public function __construct($title, $price)
   {
-    $this->title = $title;
-    $this->price = $price;
+    if (empty($price)) {
+      throw new \Exception('Не задана цена на товар!');
+    } else {
+      $this->title = $title;
+      $this->price = $price;
+    }
   }
 
   abstract public function getProduct();

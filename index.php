@@ -7,38 +7,24 @@
   use Shop\classes\Product\Sugar;
 
   //Создание товаров
-  $keyboard = new Keyboard('keyboard', 500, 'USB', 'мембрана');
-  $printer = new Printers('printer', 35000, 'A3/A4', '10');
-  $sugar = new Sugar('sugar', 500, '10');
-
-  //Функция для проверки, установлена цена на товар или нет
-  function checkPrice($price) {
-    if ($price === '') {
-     throw new \Exception('Не задана цена на товар!');
-    }
-    return $price;
+  try {
+    $keyboard = new Keyboard('keyboard', 500, 'USB', 'мембрана');
+    $printer = new Printers('printer', 35000, 'A3/A4', '10');
+    $sugar = new Sugar('sugar', 500, '10');
   }
-  //Проверка цены
-  if(!empty($_POST)) {
-    try {
-      echo checkPrice($keyboard->getPrice());
-      echo checkPrice($printer->getPrice());
-      echo checkPrice($sugar->getPrice());
-    }
-    catch (\Exception $e) {
-      echo 'Выброшено исключение: ' . $e->getMessage() . "\n";
-      die;
-    }
+  catch (\Exception $e) {
+    echo 'Выброшено исключение: ' . $e->getMessage() . "\n";
+    die;
+  }
 
+  if(!empty($_POST)) {
     //В сессию добавляется количество товара и результат метода - название и цена
     if ($_POST['keyboard'] != '0') {
       $_SESSION['keyboard'] = ["amount" => $_POST['keyboard'], "title" => $keyboard->getTitle(), "price" => $keyboard->getPrice()];
     }
-
     if ($_POST['printer'] != '0') {
       $_SESSION['printer'] = ["amount" => $_POST['printer'], "title" => $printer->getTitle(), "price" => $printer->getPrice()];
     }
-
     if ($_POST['sugar'] != '0') {
       $_SESSION['sugar'] = ["amount" => $_POST['sugar'], "title" => $sugar->getTitle(), "price" => $sugar->getPrice()];
     }
