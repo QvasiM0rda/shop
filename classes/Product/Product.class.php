@@ -12,6 +12,11 @@ abstract class Product
     return $this->price;
   }
 
+  //Возвращается название товара
+  public function getTitle(){
+    return $this->title;
+  }
+
   //Метод устанавливет название и цену товара
   public function __construct($title, $price)
   {
@@ -22,16 +27,9 @@ abstract class Product
   abstract public function getProduct();
 
   //Возвращает товар для вывода
-  public function enableProduct()
+  public function productOutput()
   {
     $return = $this->getProduct() . ' <input type="number" name="' . $this->title . '" value="0"><br>';
-    return $return;
-  }
-
-  //Передает название и цену для занесения в корзину
-  public function toBasket()
-  {
-    $return = [$this->title, $this->price];
     return $return;
   }
 }

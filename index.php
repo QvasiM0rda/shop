@@ -18,7 +18,6 @@
     }
     return $price;
   }
-
   //Проверка цены
   if(!empty($_POST)) {
     try {
@@ -32,10 +31,17 @@
     }
 
     //В сессию добавляется количество товара и результат метода - название и цена
-    $_SESSION['keyboard'] = [$_POST['keyboard'], $keyboard->toBasket()];
-    $_SESSION['printer'] = [$_POST['printer'],  $printer->toBasket()];
-    $_SESSION['sugar'] = [$_POST['sugar'], $sugar->toBasket()];
+    if ($_POST['keyboard'] != '0') {
+      $_SESSION['keyboard'] = ["amount" => $_POST['keyboard'], "title" => $keyboard->getTitle(), "price" => $keyboard->getPrice()];
+    }
 
+    if ($_POST['printer'] != '0') {
+      $_SESSION['printer'] = ["amount" => $_POST['printer'], "title" => $printer->getTitle(), "price" => $printer->getPrice()];
+    }
+
+    if ($_POST['sugar'] != '0') {
+      $_SESSION['sugar'] = ["amount" => $_POST['sugar'], "title" => $sugar->getTitle(), "price" => $sugar->getPrice()];
+    }
     //Переход на страницу корзины
     header('Location: basket.php');
     die;
@@ -54,9 +60,9 @@
       <legend>Доступные товары</legend>
       <p>Для добавления товара в корзину выберите нужно количество товаров и нажмите кнопку "Добавить в корзину".</p>
       <?php
-        echo $keyboard->enableProduct();
-        echo $printer->enableProduct();
-        echo $sugar->enableProduct();
+        echo $keyboard->productOutput();
+        echo $printer->productOutput();
+        echo $sugar->productOutput();
       ?>
       <button type="submit" name="to-basket" value="1">Добавить в корзину</button>
     </fieldset>
